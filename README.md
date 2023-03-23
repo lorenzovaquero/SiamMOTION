@@ -1,5 +1,37 @@
 # SiamMOTION
-TensorFlow version of SiamMOTION
+Real-time siamese multiple object tracker with enhanced proposals.
+
+
+# Weights
+
+Weights can be downloaded at [This link](https://drive.google.com/drive/folders/1YnhzIyJLdTXfkTb36r3wDLhZkrxnGJou?usp=share_link).
+
+# Usage
+
+Build and use the Docker container to solve all the dependencies. A sample code can be found in the `scripts` folder:
+
+```
+cd Docker
+./run_SiamMT.sh
+cd SiamMOTION
+python ./scripts/track.py './demo-sequence/vot15_bag/imgs' --detailed --nologs -p ./model/SiamMOTION/parameters.json
+```
+
+
+# References
+
+```
+@article{VaqueroSiamMOTION,
+  author    = {Lorenzo Vaquero and
+               V{\'{\i}}ctor M. Brea and
+               Manuel Mucientes},
+  title     = {Real-time siamese multiple object tracker with enhanced proposals},
+  journal   = {Pattern Recognition},
+  volume    = {135},
+  pages     = {109141},
+  year      = {2023}
+}
+```
 
 
 ## License

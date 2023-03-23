@@ -1,0 +1,168 @@
+{
+  "gpuId": 0,
+  "logs_folder": "/home/lorenzo.vaquero/PHD/SiamMT/Aplicacion/python/SiamTF/logs/",
+  "randomSeed": 1,
+
+  "RPN": {
+    "anchorSize": 8,
+    "anchorScales": [8],
+    "anchorRatios": [0.33, 0.5, 1, 2, 3]
+  },
+
+  "Tracker": {
+    "similarity": "DSARPN",
+    "exemplarSize": [15, 15],
+    "searchAreaSize": [31, 31],
+    "contextAmount": 0.50,
+    "cropExemplarFeatures": 7,
+    "loadAsOpenCV": true,
+    "modelPath": "/home/lorenzo.vaquero/SiamMOTION/model/SiamMOTION/",
+    "modelName": "model_tf.ckpt",
+    "useRestoreForLoadingWeights": true,
+    "useOldMethodForLoadingWeights": false,
+    "trackingLogsFolderName": "tracking",
+    "trackingLogsStep": 0,
+    "sizeMinFactor": 0.2,
+    "sizeMaxFactor": 5.0,
+    "inertiaRT": false,
+
+    "RPNInference": {
+      "scaleRatioPenalty": 0.05,
+      "scaleDamping": 0.18,
+      "windowing": "cosine",
+      "windowInfluence": 0.42,
+      "globalWindowSize": 0.1,
+      "globalWindowInfluence": 0.01,
+      "morphScoreFlavour": "EROSION",
+      "lrAsPysot": true,
+      "bboxRefinement": "VOTING",
+      "bboxRefVotingIoU": 0.8,
+      "bboxRefVotingUsePscore": true,
+      "bboxRefVotingUpdateScore": true,
+      "bboxRefTopNum": 0,
+      "bboxRefTopUseWeight": false,
+      "smoothScoreWithLocationMean": false
+    },
+
+    "Preprocessor": {
+      "setFrameSize": null,
+      "minimumFrameSize": null,
+      "frameSizeAccordingToSearchArea": false,
+      "objectiveSearchAreaSize": 287,
+      "objectiveSearchAreaPolicy": "greater",
+      "objectiveSearchAreaMargin": 64,
+      "invertRGBOrder": false,
+      "keepPixelValues": true,
+      "zeroCenterPixelValues": false,
+      "padFrameEffectiveSize": false,
+      "adjustFrameValidConvolution": false
+    }
+  },
+
+  "Trainer": {
+    "exemplarSize": [15, 15],
+    "searchAreaSize": [31, 31],
+    "contextAmount": 0.50,
+    "cropExemplarFeatures": 7,
+    "loadAsOpenCV": true,
+    "loadAsSiamTF": false,
+    "loadForFPN": false,
+    "oobTargetsIouLimit": 0.75,
+    "frameSizeLimit": [608, 1080],
+    "pretrainedModelFile": "/home/lorenzo.vaquero/SiamMOTION/model/Pretrained/model.ckpt",
+    "trainingLogsFolderName": "training",
+    "trainingLogsStep": 50,
+    "validationLogsStep": 1,
+    "validateOverSameEpoch": true,
+    "imageLogsStep": 150,
+    "trainNumEpochs": 100,
+    "frozenUntilEpoch": 100,
+    "numPairs": 100000,
+    "trainBatchSize": 24,
+    "maxFrameRange": 100,
+    "imdbTrainingRatio": 0.85,
+    "trainNegativePairProbability": 0.3,
+    "validationNegativePairProbability": 0.0,
+    "momentum": 0.9,
+    "clipGradientNorm": 0,
+    "exemplarMaxScaleShift": 0.05,
+    "exemplarMaxTranslationShift": 4,
+    "searchAreaMaxScaleShift": 0.18,
+    "searchAreaMaxTranslationShift": 64,
+
+    "augmentation": {
+      "exemplar": {
+        "maxScale": 0.05,
+        "maxTranslation": 4,
+        "maxRotation": 0.01,
+        "maxColorFactor": 1.0,
+        "maxBlurProbability": 0.0,
+        "maxNoiseFactor": 0.01,
+        "noiseStd": 0.01
+      },
+      "searchArea": {
+        "maxScale": 0.18,
+        "maxTranslation": 64,
+        "maxRotation": 0.01,
+        "maxColorFactor": 1.0,
+        "maxBlurProbability": 0.2,
+        "maxNoiseFactor": 0.02,
+        "noiseStd": 0.05
+      }
+    },
+
+    "learningRate": {
+      "trainLearningRateStart": 3e-5,
+      "trainLearningRateStop": 3e-5,
+      "trainLearningRatePolicy": "exponential"
+    },
+
+    "RPNTraining": {
+      "maxPositiveAnchors": 16,
+      "samplesWhenNegativeExample": 32,
+      "maxContributingAnchors": 64,
+      "iouNegativeThreshold": 0.3,
+      "iouPositiveThreshold": 0.6,
+      "maxIouAsPositive": true,
+      "lossClsDelta": 1.0,
+      "lossBalanceClsReg": 1.2,
+      "weightDecay": 5e-6
+    }
+  },
+
+  "network": {
+    "backbone": {
+      "branchType": "ResNet18",
+      "useDilation": false,
+      "usedLayers": [1, 2, 3, 4],
+      "padding": "SAME",
+      "adjust": "FPN",
+      "standardizeInputImage" : true,
+      "perImageStandardization" : false,
+      "grouped": false,
+      "convolutionWeightDecay": 5e-6,
+      "convolutionBiasDecay": 0,
+      "batchNormalizationWeightDecay": 0.95,
+      "initMethod": "kaiming",
+      "stddev": 0.01,
+      "epsilon": 1e-5,
+      "cropSizeStyle": "siamrpn",
+      "tensorResizeMethod": "bilinear"
+    },
+    "RPNLayer": {
+      "rpnType": "DepthwiseRPN",
+      "adjustFactor": 1.0,
+      "convolutionWeightDecay": 5e-6,
+      "batchNormalizationWeightDecay": 0.95,
+      "epsilon": 1e-5,
+      "initMethod": "kaiming",
+      "flipRegressionCoordinates": false
+    },
+    "Attention": {
+      "useSelfAttention": true,
+      "useCrossAttention": true,
+      "ignoreSpatialAttention": true,
+      "convolutionWeightDecay": 5e-6
+    }
+  }
+}
